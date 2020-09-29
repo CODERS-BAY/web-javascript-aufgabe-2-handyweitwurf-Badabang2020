@@ -15,38 +15,53 @@
 
 var gravity = 0;
 
+if (document.getElementById("earth").checked) {
+  gravity = document.getElementById("earth").value;
+} else if (document.getElementById("moon").checked) {
+  gravity = document.getElementById("moon").value;
+} else if (document.getElementById("mars").checked) {
+  gravity = document.getElementById("mars").value;
+} else if (document.getElementById("jupiter").checked) {
+  gravity = document.getElementById("jupiter").value;
+}
 
-  if (document.getElementById("earth").checked) {
-    gravity = document.getElementById("earth").value;
-  } else if (document.getElementById("moon").checked) {
-    gravity = document.getElementById("moon").value;
-  } else if (document.getElementById("mars").checked) {
-    gravity = document.getElementById("mars").value;
-  } else if (document.getElementById("jupiter").checked) {
-    gravity = document.getElementById("jupiter").value;
-  }
-
-
-var v0 = document.getElementById("velocity").value;
-var angle = document.getElementById("angle").value * (Math.PI / 180);
-var range = Math.round((v0 * v0 * Math.sin(2 * angle)) / gravity);
+var v0;
+var angle;
+var range;
 var rangeToMonster = Math.round(Math.random() * 90 + 10);
-var distance = range - rangeToMonster;
+var distance;
+var maxAttempts = document.getElementById("attempts").value;
+var attempts = 0;
 
-function placeMonster() {
-   var pos =  rangeToMonster;
+function counter() {
+  if (attempts <= maxAttempts) {
+    
+  } else {
+    alert("You lost the game.");
+  }
 }
 
 function collision() {
   if (distance == 0) {
     alert("Congratulations,you hit the monster");
+    location.reload();
   } else {
-    alert("You missed the monster with a distance of: " + distance + " m.");
+    alert(
+      "You throw: " +
+        range +
+        "m. \n" +
+        "You missed the monster with a distance of: " +
+        distance +
+        " m."
+    );
   }
 }
 
-function throwMobileDevice() {
-
+function calculating() {
+  v0 = document.getElementById("velocity").value;
+  angle = document.getElementById("angle").value * (Math.PI / 180);
+  range = Math.round((v0 * v0 * Math.sin(2 * angle)) / gravity);
+  distance = range - rangeToMonster;
 }
 
 function changeImg() {
@@ -69,24 +84,18 @@ function changeImg() {
   }
 }
 
-function setLevel() {
-  changeImg();
-  checkGravity();
-  placeMonster();
-}
-
 function throwing() {
+  counter();
+  calculating();
   collision();
 }
 
-document.getElementById("throw").onclick = throwing;
-
-document.getElementById("earth").onclick = setLevel;
-
+document.getElementById("earth").onclick = changeImg;
 document.getElementById("moon").onclick = changeImg;
 document.getElementById("mars").onclick = changeImg;
 document.getElementById("jupiter").onclick = changeImg;
 
+document.getElementById("throw").onclick = throwing;
 // alert(v0);
 // alert(angle);
 // alert(gravity);

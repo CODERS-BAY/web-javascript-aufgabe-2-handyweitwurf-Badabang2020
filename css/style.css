@@ -19,14 +19,14 @@ body {
 }
 
 #containerImg {
-  position: absolute;
   height: auto;
   width: auto;
   align-items: center;
 }
 
-#containerImg img {
+#containerImg img:first-child {
   max-width: 100%;
+  position: relative;
 }
 
 #mobileDevice {
